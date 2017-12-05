@@ -22,7 +22,7 @@ use Symfony\Component\Yaml\Dumper;
 
 /**
  * Install console command - Installs PHP Censor
- * 
+ *
  * @author Dan Cryer <dan@block8.co.uk>
  */
 class InstallCommand extends Command
@@ -37,19 +37,19 @@ class InstallCommand extends Command
         $this
             ->setName('php-censor:install')
 
-            ->addOption('url',              null, InputOption::VALUE_OPTIONAL, 'PHP Censor installation URL')
-            ->addOption('db-type',          null, InputOption::VALUE_OPTIONAL, 'Database type')
-            ->addOption('db-host',          null, InputOption::VALUE_OPTIONAL, 'Database host')
-            ->addOption('db-port',          null, InputOption::VALUE_OPTIONAL, 'Database port')
-            ->addOption('db-name',          null, InputOption::VALUE_OPTIONAL, 'Database name')
-            ->addOption('db-user',          null, InputOption::VALUE_OPTIONAL, 'Database user')
-            ->addOption('db-password',      null, InputOption::VALUE_OPTIONAL, 'Database password')
-            ->addOption('admin-name',       null, InputOption::VALUE_OPTIONAL, 'Admin name')
-            ->addOption('admin-password',   null, InputOption::VALUE_OPTIONAL, 'Admin password')
-            ->addOption('admin-email',      null, InputOption::VALUE_OPTIONAL, 'Admin email')
-            ->addOption('queue-use',        null, InputOption::VALUE_OPTIONAL, 'Don\'t ask for queue details', true)
-            ->addOption('queue-host',       null, InputOption::VALUE_OPTIONAL, 'Beanstalkd queue server hostname')
-            ->addOption('queue-name',       null, InputOption::VALUE_OPTIONAL, 'Beanstalkd queue name')
+            ->addOption('url', null, InputOption::VALUE_OPTIONAL, 'PHP Censor installation URL')
+            ->addOption('db-type', null, InputOption::VALUE_OPTIONAL, 'Database type')
+            ->addOption('db-host', null, InputOption::VALUE_OPTIONAL, 'Database host')
+            ->addOption('db-port', null, InputOption::VALUE_OPTIONAL, 'Database port')
+            ->addOption('db-name', null, InputOption::VALUE_OPTIONAL, 'Database name')
+            ->addOption('db-user', null, InputOption::VALUE_OPTIONAL, 'Database user')
+            ->addOption('db-password', null, InputOption::VALUE_OPTIONAL, 'Database password')
+            ->addOption('admin-name', null, InputOption::VALUE_OPTIONAL, 'Admin name')
+            ->addOption('admin-password', null, InputOption::VALUE_OPTIONAL, 'Admin password')
+            ->addOption('admin-email', null, InputOption::VALUE_OPTIONAL, 'Admin email')
+            ->addOption('queue-use', null, InputOption::VALUE_OPTIONAL, 'Don\'t ask for queue details', true)
+            ->addOption('queue-host', null, InputOption::VALUE_OPTIONAL, 'Beanstalkd queue server hostname')
+            ->addOption('queue-name', null, InputOption::VALUE_OPTIONAL, 'Beanstalkd queue name')
             ->addOption('config-from-file', null, InputOption::VALUE_OPTIONAL, 'Take config from file and ignore options', false)
 
             ->setDescription('Install PHP Censor');
@@ -61,7 +61,7 @@ class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $configFromFile = (boolean)$input->getOption('config-from-file');
-        
+
         if (!$configFromFile && !$this->verifyNotInstalled($output)) {
             return;
         }
@@ -320,7 +320,7 @@ class InstallCommand extends Command
             'name'      => null,
             'lifetime'  => 600,
         ];
-        
+
         if (!$input->getOption('queue-use')) {
             return $skipQueueConfig;
         }
@@ -348,7 +348,7 @@ class InstallCommand extends Command
 
             $questionQueue       = new Question('Enter your beanstalkd hostname [localhost]: ', 'localhost');
             $queueConfig['host'] = $helper->ask($input, $output, $questionQueue);
-        
+
             $questionName        = new Question('Enter the queue (tube) name to use [php-censor-queue]: ', 'php-censor-queue');
             $queueConfig['name'] = $helper->ask($input, $output, $questionName);
         }
@@ -461,7 +461,6 @@ class InstallCommand extends Command
             unset($pdo);
 
             return true;
-
         } catch (Exception $ex) {
             $output->writeln('<error>PHP Censor could not connect to database with the details provided. Please try again.</error>');
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
